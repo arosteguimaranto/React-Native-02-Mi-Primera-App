@@ -1,55 +1,74 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 
-interface Props{
+interface Props {
     //A la hora de definir una interfaz van primero las propiedades y los metodos abajo de estas
     title: string
     position?: 'br' | 'bl'
     onPress: () => void;
 }
 
-export const Fab = ({title, onPress, position ='br'}: Props) => {
+export const Fab = ({ title, onPress, position = 'br' }: Props) => {
 
-    
 
-  return (
-    <TouchableOpacity
-    style={styles.fabLocationBR}
-    onPress={onPress}
-    >
-        <View style={styles.fab}>
-            <Text style={styles.fabText}>+1</Text>
 
-        </View>
+    return (
+       <View
+       style={[
+        styles.fabLocation,
+        (position === 'bl') ? styles.left : styles.right
+    ]}
+       >
+        
+         <TouchableNativeFeedback
+           
+            onPress={onPress}
+            background={TouchableNativeFeedback.Ripple('black', false, 30)}
+        >
+            <View style={styles.fab}>
+                <Text style={styles.fabText}>{title}</Text>
 
-    </TouchableOpacity>
-   
-  )
+            </View>
+
+        </TouchableNativeFeedback>
+       </View>
+
+    )
 }
 
 const styles = StyleSheet.create({
-    fabLocationBR:{
-        position:'absolute',
-        bottom: 25,
-        right: 25 
-    },
-    fabLocationBL:{
+    fabLocation: {
         position: 'absolute',
         bottom: 25,
+    },
+    right: {
+        right: 25
+    },
+    left: {
         left: 25
     },
-    fab:{
-        backgroundColor:'#5856D6',
+
+    fab: {
+        backgroundColor: '#0d0acb',
         width: 60,
         height: 60,
         borderRadius: 100,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+
+        elevation: 8,
     },
     fabText: {
         color: 'white',
         fontSize: 25,
         fontWeight: 'bold',
-        alignSelf:'center'
+        alignSelf: 'center'
     }
 
 })
