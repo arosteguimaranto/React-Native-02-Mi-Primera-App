@@ -2,17 +2,20 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Props{
+    //A la hora de definir una interfaz van primero las propiedades y los metodos abajo de estas
     title: string
+    position?: 'br' | 'bl'
+    onPress: () => void;
 }
 
-export const Fab = (props: Props) => {
+export const Fab = ({title, onPress, position ='br'}: Props) => {
 
-    console.log(props.title)
     
+
   return (
     <TouchableOpacity
     style={styles.fabLocationBR}
-    onPress={() => console.log('Click')}
+    onPress={onPress}
     >
         <View style={styles.fab}>
             <Text style={styles.fabText}>+1</Text>
