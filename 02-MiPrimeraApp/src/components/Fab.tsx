@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 
 interface Props {
     //A la hora de definir una interfaz van primero las propiedades y los metodos abajo de estas
@@ -10,30 +10,54 @@ interface Props {
 
 export const Fab = ({ title, onPress, position = 'br' }: Props) => {
 
-
-
-    return (
-       <View
-       style={[
-        styles.fabLocation,
-        (position === 'bl') ? styles.left : styles.right
-    ]}
-       >
-        
-         <TouchableNativeFeedback
-           
+    const ios = () => {
+        return(
+            <TouchableOpacity
             onPress={onPress}
-            background={TouchableNativeFeedback.Ripple('black', false, 30)}
-        >
-            <View style={styles.fab}>
-                <Text style={styles.fabText}>{title}</Text>
+            activeOpacity={0.8}
+            style={[
+                styles.fabLocation,
+                ( position === 'bl') ? styles.left : styles.right
+            ]}
+            >
+                <View style={styles.fab}>
+                    <Text style ={styles.fabText}>{title}</Text>
 
+                </View>
+
+            </TouchableOpacity>
+        )
+
+    }
+
+    const android = () => {
+        return (
+            <View
+                style={[
+                    styles.fabLocation,
+                    (position === 'bl') ? styles.left : styles.right
+                ]}
+            >
+
+                <TouchableNativeFeedback
+
+                    onPress={onPress}
+                    background={TouchableNativeFeedback.Ripple('black', false, 30)}
+                >
+                    <View style={styles.fab}>
+                        <Text style={styles.fabText}>{title}</Text>
+
+                    </View>
+
+                </TouchableNativeFeedback>
             </View>
 
-        </TouchableNativeFeedback>
-       </View>
+        )
 
-    )
+    }
+
+    return (Platform.OS === 'ios') ? ios () : android(); 
+
 }
 
 const styles = StyleSheet.create({
